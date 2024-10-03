@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('permission:All Users', ['only' => ['index']]);
+        $this->middleware('permission:Create User', ['only' => ['create']]);
+        $this->middleware('permission:Edit User', ['only' => ['edit']]);
+        $this->middleware('permission:Delete User', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,12 +24,11 @@ class UserController extends Controller
     {
         $keyword = request('search');
         $title = 'All Users';
-
         $users = User::where('name','like', '%'.$keyword.'%')
                 ->orWhere('email','like', '%'.$keyword.'%')
                 ->orderBy('id', 'desc') -> paginate('10');
 
-        return view ("admin.user.all_users", compact( 'users', 'keyword' , 'title'));
+        return view ("admin.user.all_users", compact( 'users','keyword' ,'title'));
     }
 
     /**
@@ -32,8 +39,9 @@ class UserController extends Controller
     public function create()
     {
         $title = 'User Create';
+        $roles = Role::pluck('name','name')->all();
 
-        return view ("admin.user.create_user", compact('title'));
+        return view ("admin.user.create_user", compact('title','roles'));
     }
 
     /**
@@ -51,11 +59,12 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'user_photo' => 'required|image|mimes:png,jpg,jpeg',
             'password' => 'required|min:8|confirmed',
-            'password_confirmation' => 'required|min:8'
+            'password_confirmation' => 'required|min:8',
+            'roles' => 'required',
         ]);
 
 
-        $user = new User;
+        $user = new User; 
 
         $user->name = $request->name;
         $user->username = implode( '' , explode ( ' ', $request->name ));
@@ -67,9 +76,10 @@ class UserController extends Controller
         $user->user_photo = $photo;
         $user->password = bcrypt( $request->password );
 
-        $user->save();
+        $user->syncRoles( $request->roles );
+        $user->save() ;
 
-        return redirect()->route('user.index')->with('message', 'Registration Successful');
+       return redirect()->route('user.index')->with('message','User Created Successfully with Roles');
 
     }
 
@@ -93,11 +103,14 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+        // return $user;
         $title = "Edit User";
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
 
 
 
-        return view ("admin.user.edit_user", compact('user', 'title'));
+        return view ("admin.user.edit_user", compact('user', 'title','roles','userRole'));
     }
 
     /**
@@ -125,7 +138,7 @@ class UserController extends Controller
             $user->user_photo = $thumbnail_name ;
         }
 
-        $user->save();
+        $user->syncRoles( $request->roles );
 
         return redirect()->route('user.index')->with('message', 'User has been Update Successfully!');
     }

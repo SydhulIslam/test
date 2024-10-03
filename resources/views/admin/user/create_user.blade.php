@@ -99,6 +99,16 @@
                                     @enderror
 
                                     <div class="mb-3">
+                                        <label for="">Roles</label>
+                                        <select name="roles[]" class="form-control" multiple>
+                                            <option value="">Select Role</option>
+                                            @foreach ($roles as $role)
+                                            <option value="{{ $role }}">{{ $role }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
                                             <label class="form-check-label" for="terms-conditions">
@@ -108,7 +118,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary d-grid w-100">Sign up</button>
+                                    <button type="submit" class="btn btn-primary d-grid w-100">Save</button>
 
                                 </form>
 

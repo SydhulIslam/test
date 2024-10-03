@@ -35,7 +35,7 @@
         </div>
         <div class="content">
           <h4 id="heading-example">{{$blog_detail -> excerpt}}</h4>
-          <p>{{$blog_detail -> content}}</p>
+          <p>{{$blog_detail -> contents}}</p>
 
           <h1 id="heading-1">Heading 1</h1>
           <h2 id="heading-2">Heading 2</h2>

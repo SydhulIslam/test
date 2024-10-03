@@ -1,27 +1,27 @@
-@extends("comon/deshbord_layout")
+@extends('comon/deshbord_layout')
 
 
-@section("content")
+@section('content')
 
 
-        <!-- Menu -->
-        @include('comon.menu')
-        <!-- / Menu -->
+    <!-- Menu -->
+    @include('comon.menu')
+    <!-- / Menu -->
 
 
-        <!-- Layout container -->
-        <div class="layout-page">
+    <!-- Layout container -->
+    <div class="layout-page">
 
-          <!-- Navbar -->
-          @include('comon.nav')
-          <!-- / Navbar -->
+        <!-- Navbar -->
+        @include('comon.nav')
+        <!-- / Navbar -->
 
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y ">
-                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms /</span> {{$title}}</h4>
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms /</span> {{ $title }}</h4>
 
                 <div class="card mb-4">
 
@@ -32,7 +32,8 @@
                                 <small class="text-muted float-end">Merged input group</small>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="{{route('user.update', $user->id)}}" enctype="multipart/form-data" >
+                                <form method="POST" action="{{ route('user.update', $user->id) }}"
+                                    enctype="multipart/form-data">
 
                                     @csrf
                                     @method('put')
@@ -43,8 +44,23 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                         <div class="input-group input-group-merge">
-                                            <input type="text" name="name" value="{{$user->name}}" class="form-control" id="basic-icon-default-fullname" placeholder="Post Title" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2">
+                                            <input type="text" name="name" value="{{ $user->name }}"
+                                                class="form-control" id="basic-icon-default-fullname"
+                                                placeholder="Post Title" aria-label="John Doe"
+                                                aria-describedby="basic-icon-default-fullname2">
                                         </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="basic-icon-default-fullname">User Role</label>
+                                        <div>
+                                            @if (!empty($user->getRoleNames()))
+                                                @foreach ($user->getRoleNames() as $rolename)
+                                                    <label class="badge bg-primary mx-1">{{ $rolename }}</label>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
                                     </div>
 
 
@@ -55,16 +71,21 @@
                                     </div>
 
                                     <div class="d-flex align-items-start align-items-sm-center gap-4 mb-5">
-                                        <img src="/storage/images/{{$user->user_photo}}" alt="Blog Thumbnail" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+                                        <img src="/storage/images/{{ $user->user_photo }}" alt="Blog Thumbnail"
+                                            class="d-block rounded" height="100" width="100" id="uploadedAvatar">
                                         <div class="button-wrapper">
 
                                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                                 <span class="d-none d-sm-block">Upload Thumbnail</span>
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
-                                                <input type="file" name="user_photo" id="upload" class="account-file-input" hidden="" value="/storage/images/{{$user->user_photo}}" accept="image/png, image/jpeg">
+                                                <input type="file" name="user_photo" id="upload"
+                                                    class="account-file-input" hidden=""
+                                                    value="/storage/images/{{ $user->user_photo }}"
+                                                    accept="image/png, image/jpeg">
                                             </label>
 
-                                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                            <button type="button"
+                                                class="btn btn-outline-secondary account-image-reset mb-4">
                                                 <i class="bx bx-reset d-block d-sm-none"></i>
                                                 <span class="d-none d-sm-block">Reset</span>
                                             </button>
@@ -75,13 +96,15 @@
 
                                     <div class="mb-3">
                                         <label for="email" class="form-label">User E-mail</label>
-                                        <input class="form-control" type="email" id="email" name="email" value="{{$user->email}}" placeholder="User E-mail">
+                                        <input class="form-control" type="email" id="email" name="email"
+                                            value="{{ $user->email }}" placeholder="User E-mail">
                                     </div>
 
                                     <div class="mb-3 form-password-toggle">
                                         <label class="form-label" for="password">Password</label>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" id="password" class="form-control" name="password" placeholder="············" aria-describedby="password">
+                                            <input type="password" id="password" class="form-control" name="password"
+                                                placeholder="············" aria-describedby="password">
                                             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                         </div>
                                     </div>
@@ -89,7 +112,8 @@
                                     <div class="mb-3 form-password-toggle">
                                         <label class="form-label" for="password">Re-Write Password</label>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" id="password" class="form-control" name="password" placeholder="············" aria-describedby="password">
+                                            <input type="password" id="password" class="form-control" name="password"
+                                                placeholder="············" aria-describedby="password">
                                             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                         </div>
                                     </div>
@@ -110,5 +134,4 @@
 
 
 
-@endsection
-
+        @endsection

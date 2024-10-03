@@ -12,6 +12,17 @@ use Illuminate\Support\Facades\Gate;
 
 class BlogController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('permission:All Blogs', ['only' => ['index']]);
+        $this->middleware('permission:Create Blog', ['only' => ['create']]);
+        $this->middleware('permission:Edit Blog', ['only' => ['edit']]);
+        $this->middleware('permission:Delete Blog', ['only' => ['destroy']]);
+    }
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +31,6 @@ class BlogController extends Controller
 
     public function index()
     {
-
         $keyword = request('search');
 
         $title = "All Blog";
@@ -45,10 +55,7 @@ class BlogController extends Controller
     {
         $categories = Category::all();
 
-        return view ('admin.blog.create_blog', [
-            'categories' => $categories,
-            'title' => 'Create Post'
-        ]);
+        return view ('admin.blog.create_blog',compact('categories'));
     }
 
     /**
@@ -110,19 +117,6 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-
-        $blog = Blog::find($id);
-
-        // if( $blog->user_id != auth()->user()->id){
-        //     abort(403);
-        // }
-
-
-        if(Gate::denies('blog_edit', $blog)){
-            abort(403);
-        }
-
-
         $blog = Blog::find($id);
         $categories = Category::all();
         $cat = $blog->category;

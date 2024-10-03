@@ -10,6 +10,15 @@ use App\Models\User;
 
 class CategoryController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('permission:All Categorys', ['only' => ['index']]);
+        $this->middleware('permission:Create Category', ['only' => ['create']]);
+        $this->middleware('permission:Edit Category', ['only' => ['edit']]);
+        $this->middleware('permission:Delete Category', ['only' => ['destroy']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

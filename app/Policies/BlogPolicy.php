@@ -10,7 +10,5 @@ class BlogPolicy
 {
     use HandlesAuthorization;
 
-    public function blog_edit(User $user, Blog $blog){
-        return $user->id === $blog->user_id;
-    }
+
 }

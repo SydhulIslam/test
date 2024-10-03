@@ -94,8 +94,20 @@
                                         </div>
                                     </div>
 
+                                    <div class="mb-3">
+                                        <label for="">Roles</label>
+                                        <select name="roles[]" class="form-control" multiple>
+                                            <option value="">Select Role</option>
+                                            @foreach ($roles as $role)
+                                            <option value="{{ $role }}" {{in_array($role, $userRole) ? 'selected' : ''}} > 
+                                                {{ $role }} 
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                    <button type="submit" class="btn rounded-pill btn-primary">Publish Post</button>
+
+                                    <button type="submit" class="btn rounded-pill btn-primary">Update</button>
                                     <button type="submit" class=" ms-3 btn rounded-pill btn-danger">Cancle</button>
 
                                 </form>

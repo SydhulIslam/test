@@ -26,6 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('blog_edit', [BlogPolicy::class, 'blog_edit']);
+
     }
 }
