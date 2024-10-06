@@ -8,10 +8,13 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DeshbordController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,3 +159,11 @@ Route::get('update/migrate', function () {
 
     return "Successfully Migrated";
 });
+
+Route::get('make-payment', [PaymentController::class,'view']);
+Route::post("payment", [PaymentController::class,"store"])->name("payment.mail");
+
+Route::get('assignment', [AssignmentController::class,'notification']);
+Route::post('send-score', [AssignmentController::class,'score'])->name('send.score');
+
+Route ::get('/notification', [NotificationController::class,'index']);
