@@ -56,6 +56,7 @@
 									</div>
 									<div class="pt-4">
 										<ul class="list-unstyled list-inline mb-0 ">
+											
 											<li class="list-inline-item me-3"> <p class="mb-1">{{ date('d F', strtotime($blog->created_at)) }}</p> </li>
 
 											<a href= "/category/{{ isset ($blog->category->name) ? $blog->category->name : ' '}}">

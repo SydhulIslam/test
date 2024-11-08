@@ -40,7 +40,8 @@ class BlogController extends Controller
                 ->orWhere('content','like', '%'.$keyword.'%')
                 ->orderBy('id', 'desc') -> paginate('10');
 
-        return view ("admin.blog.all_blog", compact('keyword','title','blogs'));
+        // return view ("admin.blog.all_blog", compact('keyword','title','blogs'));
+
 
     }
 
@@ -115,8 +116,15 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit( $id)
     {
+
+        $blog = Blog::find($id);
+
+        if (Gate::denies('update-blog', $blog)) {
+            abort(403);
+        }
+
         $blog = Blog::find($id);
         $categories = Category::all();
         $cat = $blog->category;
@@ -138,6 +146,8 @@ class BlogController extends Controller
     public function update(Request $request,  $id)
     {
         $blog = Blog::find($id);
+
+
         $blog->title = $request->title;
 
         $blog->slug = implode( '-' , explode ( ' ', $request->title )) . '-' . time() ;

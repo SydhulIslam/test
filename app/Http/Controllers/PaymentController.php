@@ -18,8 +18,8 @@ class PaymentController extends Controller
         $subject = "Payment Processed Successfully";
         $message = "Now you login and enjoy the website";
 
-        $request = Mail::to($tomail)->send(new SendScore($subject, $message ));
+        Mail::to($tomail)->send(new SendScore($subject, $message ));
 
-        dd($request);
+        // dd($request);
     }
 }

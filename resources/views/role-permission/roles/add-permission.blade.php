@@ -54,7 +54,7 @@
                                             <spen class="text-danger">{{ $message }}</spen>
                                         @enderror
 
-                                        <label for="">Permission</label>
+                                        <label for="">Permissions</label>
                                         <div class="row">
                                             @foreach ($permissions as $permission)
                                                 <div class="col-md-3">

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Blog;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Artisan;
@@ -119,10 +121,11 @@ Route::group([
 Route::group(['prefix'=> '','middleware' => ['auth']], function () {
 
     Route::resource('permissions', PermissionController::class);
-    Route::get('permissions/{permissionId}/delete', [PermissionController::class, "destroy" ]);
+    Route::get('permissions/{permissionId}/delete', [PermissionController::class, "destroy" ]); 
     
     Route::resource('roles', RoleController::class);
     Route::get('roles/{roleId}/delete', [RoleController::class, "destroy" ]);
+
     Route::get('roles/{roleId}/give-permissions', [RoleController::class,'addPermissionToRole'] );
     Route::put('roles/{roleId}/give-permissions', [RoleController::class,'givePermissionToRole'] );
 
@@ -167,3 +170,480 @@ Route::get('assignment', [AssignmentController::class,'notification']);
 Route::post('send-score', [AssignmentController::class,'score'])->name('send.score');
 
 Route ::get('/notification', [NotificationController::class,'index']);
+
+
+//////// //////    test  Response
+/*
+
+*/
+/*  
+Route::get('/sydhul/{user}',function (User $user){
+    return response($user);
+}); 
+*/
+
+/*
+Route::get('/sydhul/{user}',function (User $user){
+    return $user;
+});
+*/ 
+ 
+/*
+Route::get('/sydhul',function (){
+    return response("Hello World")->cookie("name","newCookie", 30);
+});
+*/
+ 
+/*
+Route::get('/rana',function (){
+    return redirect("/sydhul");
+}); 
+*/
+
+/*
+Route::get('/sydhul/{user}',function (User $user){
+    return back ();
+}); 
+*/
+
+/*
+Route::get('/rana/{user}',function (){
+    return redirect("/sydhul");
+}); 
+*/
+
+
+/*
+Route::get('/sydhul',function (){
+    return response()->json([
+        "name" => "feni",
+        "state" => "Chittagong"
+    ]);
+});
+*/
+
+/*
+Route::get('/sydhul',function (){
+    return response()->download('storage/images/3Ezid6AnXHCx3InGbuqNn38AmbctskLpAncdoLkP.jpg');
+});
+*/
+
+
+/*
+Route::get('/sydhul',function (){
+    return response()->file('storage/images/3Ezid6AnXHCx3InGbuqNn38AmbctskLpAncdoLkP.jpg');
+});
+*/
+
+//////// //////    test  Response End
+
+
+
+//////// //////    URL Generation
+
+/*
+Route::get("one", function(){
+    return 'first page <a href="/two"> Cleck Another Page </a>'. 'we are in the Page of ' . url()->current();
+});
+Route::get("two", function(){
+    return "secound page". '<a href="'.url()->previous().'"> Previous Page </a>';
+});
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

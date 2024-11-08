@@ -15,7 +15,6 @@ class PermissionController extends Controller
         $this->middleware('permission:Delete Permission', ['only' => ['destroy']]);
     }
 
-
     public function index(){
 
         $permissions = Permission::get();
@@ -24,26 +23,13 @@ class PermissionController extends Controller
             'permissions'=> $permissions]);
     }
 
-
-
-
-
-
-
     ////////////// create ///////////////////
-
 
     public function create(){
         return view('role-permission.permission.create');
     }
 
-
-
-
-
-
     ////////////// store ///////////////////
-
 
     public function store(Request $request){
 
@@ -51,14 +37,10 @@ class PermissionController extends Controller
             'name' => ['required','string','unique:permissions,name']
         ]);
 
-        Permission::create([
-            'name' => $request->name
-        ]);
+        Permission::create(['name' => $request->name]);
 
         return redirect('permissions')->with('status','Permission Created Successfully');
     }
-
-
 
     ////////////// edit ///////////////////
 
@@ -69,10 +51,6 @@ class PermissionController extends Controller
             'permission'=> $permission
         ]);
     }
-
- 
- 
-
 
     ////////////// update ///////////////////
 
@@ -88,9 +66,6 @@ class PermissionController extends Controller
 
         return redirect('permissions')->with('status','Permission Updated Successfully');
     }
-
-
-
 
     ////////////// destroy ///////////////////
 

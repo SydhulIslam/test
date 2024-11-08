@@ -16,8 +16,6 @@ class RoleController extends Controller
         $this->middleware('permission:Delete Role', ['only' => ['destroy']]);
     }
 
-
-
     public function index(){
 
         $roles = Role::get();
@@ -25,19 +23,13 @@ class RoleController extends Controller
         return view('role-permission.roles.index', compact('roles'));
     }
 
-
-
     ////////////// create ///////////////////
-
 
     public function create(){
         return view('role-permission.roles.create');
     }
 
-
-
     ////////////// store ///////////////////
-
 
     public function store(Request $request){
 
@@ -45,14 +37,10 @@ class RoleController extends Controller
             'name' => ['required','string','unique:roles,name']
         ]);
 
-        Role::create([
-            'name' => $request->name
-        ]);
+        Role::create(['name' => $request->name]);
 
         return redirect('roles')->with('status','Permission Created Successfully');
     }
-
-
 
     ////////////// edit ///////////////////
 
@@ -62,37 +50,25 @@ class RoleController extends Controller
         return view('role-permission.roles.edit', compact('role'));
     }
 
- 
- 
-
-
     ////////////// update ///////////////////
 
     public function update(Request $request, Role $role){
-
         $request->validate([
             'name' => ['required','string','unique:roles,name,' .$role->id]
         ]);
-
         $role->update([
             'name' => $request->name
         ]);
-
         return redirect('roles')->with('status','Role Updated Successfully');
     }
-
-
-
 
     ////////////// destroy ///////////////////
 
     public function destroy($roleId){
         $role = Role::find($roleId);
         $role->delete();
-
         return redirect('roles')->with('status','Role Delete Successfully');
     }
-
 
     public function addPermissionToRole( $roleId){
 
@@ -106,7 +82,6 @@ class RoleController extends Controller
         return view('role-permission.roles.add-permission', compact('role','permissions','rolePermission'));
     }
 
-
     public function givePermissionToRole(Request $request, $roleId){
 
         $request->validate([
@@ -118,9 +93,5 @@ class RoleController extends Controller
 
         return redirect()->back()->with('status','Permission added to role');
     }
-
-
-
-
 
 }

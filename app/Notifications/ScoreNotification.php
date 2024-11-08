@@ -10,10 +10,8 @@ use Illuminate\Notifications\Notification;
 class ScoreNotification extends Notification
 {
     use Queueable;
-
     protected $score ;
     protected $states;
-
     /**
      * Create a new notification instance.
      *
@@ -24,7 +22,6 @@ class ScoreNotification extends Notification
         $this->score = $score;
         $this->states = $states;
     }
-
     /**
      * Get the notification's delivery channels.
      *
@@ -35,7 +32,6 @@ class ScoreNotification extends Notification
     {
         return ['mail','database'];
     }
-
     /**
      * Get the mail representation of the notification.
      *
@@ -51,7 +47,6 @@ class ScoreNotification extends Notification
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }
-
     /**
      * Get the array representation of the notification.
      *
