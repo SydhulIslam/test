@@ -250,15 +250,28 @@ Route::get("two", function(){
 });
 */
 
+/*
+Route::get('/newsession', function(){
+    session()->put(['name' => 'sydhul']);
+});
+
+Route::get('/getsession', function(){
+    return session()->get('name' );
+});
+
+
+Route::get('/distroysession', function(){
+    session()->forget('name' );
+});
+
+*/
 
 
 
 
 
 
-
-
-
+ 
 
 
 
