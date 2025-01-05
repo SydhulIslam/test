@@ -17,6 +17,7 @@
 
         <!-- Content wrapper -->
         <div class="content-wrapper">
+            
 
             {{-- content --}}
 
@@ -78,8 +79,7 @@
                 </div>
             </div>
 
-
-
-
             {{-- end content --}}
+
+
         @endsection

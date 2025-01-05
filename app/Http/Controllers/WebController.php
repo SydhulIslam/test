@@ -52,7 +52,6 @@ class WebController extends Controller
 
     public function blog()
     {
-
         $serch_blog_value = request('search') ;
         $title = "All Blogs";
 
@@ -69,9 +68,12 @@ class WebController extends Controller
             'latest_blogs' => $latest_blog,
             'categorys' => $all_category,
         ]);
-
-
     }
+
+
+
+
+
 
     public function blog_details(Blog $slug )
     {

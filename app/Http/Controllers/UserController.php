@@ -17,8 +17,6 @@ class UserController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -108,8 +106,6 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-
-
         return view ("admin.user.edit_user", compact('user', 'title','roles','userRole'));
     }
 
@@ -165,23 +161,23 @@ class UserController extends Controller
         return view('admin.user.user_profile', compact('title','user'));
 
 
-        // $user->name             = $request->name;
-        // $user->username         = implode( '' , explode ( ' ', $request->name ));
-        // $user->email            = $request->email;
-        // $user->password         = bcrypt($request->password);
+        $user->name             = $request->name;
+        $user->username         = implode( '' , explode ( ' ', $request->name ));
+        $user->email            = $request->email;
+        $user->password         = bcrypt($request->password);
 
-        // if($request->file('user_photo') != null ){
+        if($request->file('user_photo') != null ){
 
-        //     $thumbnail_name = $request->file('user_photo')->hashname();
+            $thumbnail_name = $request->file('user_photo')->hashname();
 
-        //     $request->file('user_photo')->storeAs('public/images', $thumbnail_name);
+            $request->file('user_photo')->storeAs('public/images', $thumbnail_name);
 
-        //     $user->user_photo = $thumbnail_name ;
-        // }
+            $user->user_photo = $thumbnail_name ;
+        }
 
-        // $user->save();
+        $user->save();
 
-        // return redirect()->route('user.index')->with('message', 'User has been Update Successfully!');
+        return redirect()->route('user.index')->with('message', 'User has been Update Successfully!');
 
     }
 }

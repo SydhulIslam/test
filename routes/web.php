@@ -2,6 +2,7 @@
 
 use App\Models\Blog;
 use Illuminate\Foundation\Auth\User;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Artisan;
@@ -18,6 +19,7 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\NotificationController;
 
+use Illuminate\Support\Facades\Crypt;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,6 +77,11 @@ Route::post('/registion', [LoginController::class, 'registion_post'])->name('reg
 Route::get('/login', [LoginController::class, 'login_get'])->name('login');
 Route::post('/login', [LoginController::class, 'login_post'])->name('login_post');
 
+Route::get('/forgot-password', [LoginController::class, 'password_request'])->name('password.request');
+Route::post('/forgot-password', [LoginController::class, 'password_request_post'])->name('password.email');
+Route::get('/reset-password/{token}', [LoginController::class, 'password_reset'])->name('password.reset');
+Route::post('/reset-password', [LoginController::class, 'password_update'])->name('password.update');
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 ///-------------------------------////////////----------------------///////////////
@@ -98,13 +105,10 @@ Route::group([
     Route::group([
         'middleware' => 'is_customer'
     ], function () {
-
         Route::get('/deshbord', [CustomerController::class, 'deshbord'])->name('deshbord');
     });
 
-
     Route::post('/logout', [CustomerController::class, 'logout'])->name('logout');
-
 
 });
 
@@ -121,8 +125,8 @@ Route::group([
 Route::group(['prefix'=> '','middleware' => ['auth']], function () {
 
     Route::resource('permissions', PermissionController::class);
-    Route::get('permissions/{permissionId}/delete', [PermissionController::class, "destroy" ]); 
-    
+    Route::get('permissions/{permissionId}/delete', [PermissionController::class, "destroy" ]);
+
     Route::resource('roles', RoleController::class);
     Route::get('roles/{roleId}/delete', [RoleController::class, "destroy" ]);
 
@@ -132,30 +136,23 @@ Route::group(['prefix'=> '','middleware' => ['auth']], function () {
 
 
     Route::group(['prefix' => 'admin','middleware' => ['auth']], function () {
-
         Route::resources([
             'blog' => BlogController::class,
             'category' => CategoryController::class,
             'user' => UserController::class
         ]);
-    
         Route::get('/my-profile', [UserController::class, 'my_profile'])->name('user.profile');
-    
     });
 
 });
 
 
-
-
-
-
-
 // Deshbord Route
 /////////////////////////////////////////
-Route::resource('deshbord', DeshbordController::class);
 
+//Route::resource('deshbord', DeshbordController::class)->middleware('auth', 'verified');
 
+Route::get('deshbord', [DeshbordController::class, "index"])->middleware('auth', 'verified')->name('deshbord.index');
 
 Route::get('update/migrate', function () {
     Artisan::call('migrate');
@@ -176,40 +173,40 @@ Route ::get('/notification', [NotificationController::class,'index']);
 /*
 
 */
-/*  
+/*
 Route::get('/sydhul/{user}',function (User $user){
     return response($user);
-}); 
+});
 */
 
 /*
 Route::get('/sydhul/{user}',function (User $user){
     return $user;
 });
-*/ 
- 
+*/
+
 /*
 Route::get('/sydhul',function (){
     return response("Hello World")->cookie("name","newCookie", 30);
 });
 */
- 
+
 /*
 Route::get('/rana',function (){
     return redirect("/sydhul");
-}); 
+});
 */
 
 /*
 Route::get('/sydhul/{user}',function (User $user){
     return back ();
-}); 
+});
 */
 
 /*
 Route::get('/rana/{user}',function (){
     return redirect("/sydhul");
-}); 
+});
 */
 
 
@@ -269,9 +266,30 @@ Route::get('/distroysession', function(){
 
 
 
+Route::get('/email/verify', [LoginController::class, 'emailNotice'])->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}',[LoginController::class, 'emailVerify'])->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification',[LoginController::class, 'resentVerify'])->middleware(['auth', 'throttle:6,1'])->name('verification.send') ;
 
 
- 
+Route::get('/encrypt-value', function(){
+    $password = "123456";
+
+    $encrypt_pass = Crypt::encryptString($password);
+
+    return $encrypt_pass;
+}) ;
+
+Route::get('/decrypt-value', function(){
+
+    $encrypt_password = "eyJpdiI6IlNiV0hOeFloM0xKcXhvMUFBNStnOVE9PSIsInZhbHVlIjoiZ2VxMzRoYXd3UXc5cGpoZXJabmUyQT09IiwibWFjIjoiYjljMTBhNzgwYTkzMTBhYjE2MGZiMDYwY2UyZTlhNmNiMTVkNWZiMDY0ZTQ5MWU5NGE3ZDM4MzJjN2M4MDhkYiIsInRhZyI6IiJ9";
+
+    $decrypt_pass = Crypt::decryptString($encrypt_password);
+
+
+    return $decrypt_pass;
+}) ;
 
 
 

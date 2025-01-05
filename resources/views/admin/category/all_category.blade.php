@@ -152,11 +152,7 @@
 
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#smallModal{{$category->id}}"> Remove </button>
                                             </form>
-
-
-
                                         </div>
-
                                     </td>
 
 

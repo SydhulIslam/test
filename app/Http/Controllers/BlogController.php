@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\User;
-
 use Illuminate\Support\Facades\Gate;
 
 class BlogController extends Controller
@@ -40,9 +39,7 @@ class BlogController extends Controller
                 ->orWhere('content','like', '%'.$keyword.'%')
                 ->orderBy('id', 'desc') -> paginate('10');
 
-        // return view ("admin.blog.all_blog", compact('keyword','title','blogs'));
-
-
+        return view ("admin.blog.all_blog", compact('keyword','title','blogs'));
     }
 
 
